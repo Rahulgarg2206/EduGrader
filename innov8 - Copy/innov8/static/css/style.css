@@ -1,0 +1,60 @@
+button.contact-btn{
+	margin-left: 400px;
+	background: yellow;
+	height: 50px;
+}
+.top-menu-link{
+
+margin-left: 10px;
+}
+body{
+	background-repeat: no-repeat;
+	background-size: cover;
+
+}
+.slider{
+	width: 100%;
+	height: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	background-color: lightgray;
+	border-top: 2px solid black;
+}
+.space{
+	 word-spacing:10px;
+}
+.image{
+   transition: transform 0.3s ease;
+}
+.image:hover{
+	 transform: scale(1.1); 
+}
+.logo{
+	float: left;
+}
+.footer:hover{
+	background-color: blue;
+	color: black;
+}
+
+.card{
+	margin-right: 10px;
+	max-width: 285px;
+	box-shadow: 4px 4px 4px 4px grey;
+}
+.row{
+	margin-block: 9px;
+	
+}
+.container{
+	display: block;
+	text-align: center;
+}
+.header{
+	text-align: centre !important;
+}
+.container-fluid{
+	display: block;
+	text-align: center;
+}
