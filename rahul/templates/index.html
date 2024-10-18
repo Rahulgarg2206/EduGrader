@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 100px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+        .wrong {
+            color: red;
+        }
+        .right {
+            color: green;
+        }
+        .improve {
+            margin-top: 10px;
+            color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Answer Checker</h1>
+        <form id="checkForm">
+            <label for="question">Question</label>
+            <textarea id="question" name="question" required></textarea>
+
+            <label for="answer">Answer</label>
+            <textarea id="answer" name="answer" required></textarea>
+
+            <label for="total_mark">Total Marks</label>
+            <input type="number" id="total_mark" name="total_mark" required>
+
+            <label for="question_type">Question Type</label>
+            <select id="question_type" name="question_type" required>
+                <option value="short question">Short Question</option>
+                <option value="long question">Long Question</option>
+                <option value="MCQ">MCQ</option>
+            </select>
+
+            <label for="class_level">Class</label>
+            <input type="number" id="class_level" name="class_level" required>
+
+            <button type="submit">Check Answer</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;">
+            <p><strong>Answer:</strong> <span id="answerResult"></span></p>
+            <p><strong>Mark:</strong> <span id="markResult"></span></p>
+            <p><strong>Improvement Tips:</strong> <span id="improveTips"></span></p>
+            <p><strong>Mistakes:</strong> <span id="mistakes"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('checkForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('/check_answer', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Extract and display JSON response
+                const resultDiv = document.getElementById('result');
+                const answerResult = data.answer === 'right' ? 'Correct' : 'Incorrect';
+
+                document.getElementById('answerResult').textContent = answerResult;
+                document.getElementById('answerResult').className = data.answer === 'right' ? 'right' : 'wrong';
+
+                document.getElementById('markResult').textContent = data.Mark;
+
+                document.getElementById('improveTips').textContent = data.Improve || 'None';
+
+                document.getElementById('mistakes').textContent = data.Mistake || 'None';
+
+                resultDiv.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
